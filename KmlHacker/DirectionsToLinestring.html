@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>Kml Hacker</title>
+    <style>
+
+        html, body, #map-canvas {
+            height: 100%;
+            margin: 0px;
+            padding: 0px
+        }
+
+        #panel {
+            position: absolute;
+            bottom: 5px;
+            width: 100%;
+            z-index: 5;
+            background-color: #fff;
+            padding: 5px;
+            border: 1px solid #999; 
+        }
+
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script>
+
+        var map;
+        var dService;
+        var dRenderer;
+        var polyline = [];
+        var start;
+        var end;
+
+        var linestringTemplate = "<Placemark><name>#NAME#</name><styleUrl>#style</styleUrl><LineString><tessellate>1</tessellate><coordinates>#COORDINATES#</coordinates></LineString></Placemark>";
+
+
+        function initialize() {
+
+            // Map
+            var mapOptions = {
+                mapTypeId: google.maps.MapTypeId.SATELLITE
+            };
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+
+            // Service
+            dService =  new google.maps.DirectionsService();
+
+
+            // Reference layers
+            var camadaEstradasMenores = new google.maps.KmlLayer({
+                url: 'https://www.dropbox.com/s/poxs3ug7hulyqaq/Estradas%20Menores.kml?dl=1',
+                preserveViewport: true,
+                map: map
+            });
+
+            var camadaEstradasInternas = new google.maps.KmlLayer({
+                url: 'https://www.dropbox.com/s/fskl6ug92gwqqol/Estradas%20Internas.kml?dl=1',
+                preserveViewport: true,
+                map: map
+            });
+
+            var camadaContorno = new google.maps.KmlLayer({
+                url: 'https://www.dropbox.com/s/d0699dllfebfhjp/Contorno.kml?dl=1',
+                map: map             
+            });
+            
+            var camadaCidadesVilarejos = new google.maps.KmlLayer({
+                //url: 'https://www.dropbox.com/s/hdw5g1ghf7qfck7/Cidades%20e%20Vilarejos.kml?dl=1',
+                url: 'https://www.google.com/maps/d/kml?mid=zm9PtxcccPwY.kwUEr6C6FWIk&lid=zm9PtxcccPwY.kLGYWbVDvrIQ',
+                preserveViewport: true,
+                map: map
+            });
+
+            var camadaPontosReferencia = new google.maps.KmlLayer({
+                url: 'https://www.google.com/maps/d/kml?mid=zm9PtxcccPwY.kwUEr6C6FWIk&lid=zm9PtxcccPwY.k86jqK6U0trw',
+                preserveViewport: true,
+                map: map
+            })
+
+            var exemploKml = new google.maps.KmlLayer({
+                url: 'https://raw.githubusercontent.com/mapbox/Simple-KML/master/sample/example.kml',
+                map: map
+            })
+
+            // var imageBounds = new google.maps.LatLngBounds(
+            //     new google.maps.LatLng(-32.0003444923, -52.9990303656),
+            //     new google.maps.LatLng(-29.9170066351, -51.1655442674)
+            // );
+            // quadranteAltitudeOverlay = new google.maps.GroundOverlay(
+            //     'https://www.dropbox.com/s/mdt6sx1tq37eq1q/quadranteRelevo.jpg?dl=1',
+            //     imageBounds,
+            //     {
+            //         clickable: false,
+            //         opacity: 0.4,
+            //         map: map
+            //     });
+
+
+            // Renderer
+            dRenderer = new google.maps.DirectionsRenderer(
+            {
+                draggable: true
+            });
+
+            dRenderer.setMap(map);
+
+
+            // Events
+            google.maps.event.addListener(map, "click", function(event)
+            {
+                click(event.latLng);
+            });    
+
+            google.maps.event.addListener(dRenderer, "directions_changed", function(event)
+            {
+                updatePolyline();
+            });            
+
+        }
+
+
+        function click(location) {
+
+            if (typeof start == 'undefined') {
+                start = location;
+                return;
+            }
+
+            else
+            if (typeof end == 'undefined') {
+                end = location;
+                calcRoute();
+            }            
+            else
+            {
+                calcRoute();
+            }
+        }   
+
+
+
+        function calcRoute() {
+
+            var request = {
+                origin:start,
+                destination:end,
+                travelMode: google.maps.TravelMode.DRIVING,
+                provideRouteAlternatives : false
+            };
+
+            dService.route(request, function(dResult, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    
+                    dRenderer.setDirections(dResult);
+
+
+
+                    return;
+
+
+                    /*
+                    var routepath = new google.maps.Polyline({
+                        geodesic: true,
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2
+                    });
+
+                    routepath.setMap(map);    
+
+                    var arr = [];
+
+                    for (var p = 0; p < polyline.length; p++)
+                    {
+                        pair = polyline[p];
+                        arr.push(new google.maps.LatLng(pair));
+                    }               
+                    routepath.setPath(arr);
+                    */
+                }
+            });
+        }
+
+
+        function updatePolyline()
+        {
+            coordinates = [];
+
+            var route = dRenderer.getDirections().routes[0];
+            var legs = route.legs
+
+            var name = route.summary;
+
+
+            for (var i = 0; i < legs.length; i++)
+            {
+                var leg = legs[i];
+                var steps = leg.steps;
+
+                for (var j = 0; j < steps.length; j++)
+                {
+                    var step = steps[j];
+                    var points = step.polyline.points
+
+                    coordinates.push.apply(coordinates, (decode(points)));
+                }
+            }
+
+            var textArea = document.getElementById('linestring');
+            textArea.value = KmlLineString(name, coordinates);
+            textArea.select();
+        }
+
+        function KmlLineString(name, coordinates)     
+        {
+            var coords = [];
+            for (var i = 0; i < coordinates.length; i++)
+            {
+                var c = coordinates[i];
+                coords.push([c[1], c[0]]);
+            }
+            return linestringTemplate.replace("#NAME#", name).replace("#COORDINATES#", coords.join(" "));
+        }
+
+
+        function decode(str, precision) {
+            var index = 0,
+            lat = 0,
+            lng = 0,
+            coordinates = [],
+            shift = 0,
+            result = 0,
+            byte = null,
+            latitude_change,
+            longitude_change,
+            factor = Math.pow(10, precision || 5);
+
+            while (index < str.length) {
+
+                // Reset shift, result, and byte
+                byte = null;
+                shift = 0;
+                result = 0;
+
+                do {
+                    byte = str.charCodeAt(index++) - 63;
+                    result |= (byte & 0x1f) << shift;
+                    shift += 5;
+                } while (byte >= 0x20);
+
+                latitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+
+                shift = result = 0;
+
+                do {
+                    byte = str.charCodeAt(index++) - 63;
+                    result |= (byte & 0x1f) << shift;
+                    shift += 5;
+                } while (byte >= 0x20);
+
+                longitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+
+                lat += latitude_change;
+                lng += longitude_change;
+
+                coordinates.push([lat / factor, lng / factor]);
+            }
+
+            return coordinates;
+        };        
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+</head>
+<body>
+    <div id="map-canvas"></div>
+    <div id="panel">
+        <textarea id="linestring" style="width:98%; height:100px;">(clique dois pontos sobre o mapa para gerar um elemento KML Linestring aqui, a partir da rota calculada entre os pontos clicados)</textarea>
+    </div>
+</body>
+</html>

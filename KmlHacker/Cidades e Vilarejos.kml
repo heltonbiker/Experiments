@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+	<Document>
+		<name>Cidades e Vilarejos</name>
+
+		<Style id="estilo">
+			<IconStyle>
+				<color>ff3644DB</color>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png?param=random</href>
+				</Icon>
+			</IconStyle>
+		</Style>
+
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Dom Feliciano</name>
+			<Point>
+				<coordinates>-52.1087122,-30.7007326,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Sertão Santana</name>
+			<Point>
+				<coordinates>-51.603711200000006,-30.461177700000004,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Cerro Grande do Sul</name>
+			<Point>
+				<coordinates>-51.75072850000001,-30.593721700000003,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Mariana Pimentel</name>
+			<Point>
+				<coordinates>-51.5839756,-30.3533609,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Canguçu</name>
+			<Point>
+				<coordinates>-52.67631050000001,-31.392457999999998,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Amaral Ferrador</name>
+			<Point>
+				<coordinates>-52.2536159,-30.876260800000004,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Barão do Triunfo</name>
+			<description><![CDATA[Pontos Turísticos:CACHOEIRA DO ROQUE · CACHOEIRA SOLKA · IGREJA DA MATRIZ · TÚNEL VERDE · CASA DOS SALATTI · MONUMENTO AO IMIGRANTE · CACHOEIRA DO BOCA Túnel VerdeCachoeira SolkaLocaliza-se na propriedade do Sr Armando Solka, na localidade de Boca do Campo, tendo uma ótima infra-estrutura, contando com churrasqueiras, sanitários, bar e campo de futebol, alem do atrativo especial que é uma pequena barragem hidroelétrica que gera energia ara toda a propriedade. ]]></description>
+			<Point>
+				<coordinates>-51.7363572,-30.390914099999996,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Chuvisca</name>
+			<Point>
+				<coordinates>-51.9792473,-30.755094899999996,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Encruzilhada do Sul</name>
+			<Point>
+				<coordinates>-52.5252485,-30.544632600000003,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Pantano Grande</name>
+			<Point>
+				<coordinates>-52.3732638,-30.190021599999998,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Minas do Leão</name>
+			<Point>
+				<coordinates>-52.0457983,-30.144236500000005,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Butiá</name>
+			<Point>
+				<coordinates>-51.95807930000001,-30.1286484,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Sentinela do Sul
+</name>
+			<Point>
+				<coordinates>-51.5788364,-30.611027200000002,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Arroio dos Ratos</name>
+			<Point>
+				<coordinates>-51.7264652,-30.1046676,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Parque Eldorado</name>
+			<Point>
+				<coordinates>-51.654582,-30.099544,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Turuçu</name>
+			<Point>
+				<coordinates>-52.1702957,-31.414233999999997,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Arroio do Padre</name>
+			<Point>
+				<coordinates>-52.4230027,-31.4427971,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Boqueirão</name>
+			<Point>
+				<coordinates>-52.0822978,-31.2830254,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Boa Vista</name>
+			<Point>
+				<coordinates>-52.2091341,-31.2549458,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Campos Quevedos (?)</name>
+			<Point>
+				<coordinates>-52.2478223,-31.243755600000004,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Monte Castelo</name>
+			<Point>
+				<coordinates>-52.3631573,-30.316932400000002,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Bom Retiro do Guaíba</name>
+			<Point>
+				<coordinates>-51.4994001,-30.125150000000005,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Cristal</name>
+			<Point>
+				<coordinates>-52.0504761,-30.9993152,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Pacheca</name>
+			<Point>
+				<coordinates>-51.7832851,-31.1302565,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Passo da Venda (?)</name>
+			<Point>
+				<coordinates>-51.727581,-30.635401100000003,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Barra do Arroio Grande (?)</name>
+			<Point>
+				<coordinates>-52.0417428,-30.624304399999996,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<styleUrl>#estilo</styleUrl>
+			<name>Aroeiras (?)</name>
+			<Point>
+				<coordinates>-52.3181391,-30.3317684,0.0</coordinates>
+			</Point>
+		</Placemark>
+		
+	</Document>
+</kml>
