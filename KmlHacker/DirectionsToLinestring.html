@@ -81,18 +81,18 @@
                 map: map
             })
 
-            // var imageBounds = new google.maps.LatLngBounds(
-            //     new google.maps.LatLng(-32.0003444923, -52.9990303656),
-            //     new google.maps.LatLng(-29.9170066351, -51.1655442674)
-            // );
-            // quadranteAltitudeOverlay = new google.maps.GroundOverlay(
-            //     'https://www.dropbox.com/s/mdt6sx1tq37eq1q/quadranteRelevo.jpg?dl=1',
-            //     imageBounds,
-            //     {
-            //         clickable: false,
-            //         opacity: 0.4,
-            //         map: map
-            //     });
+            var imageBounds = new google.maps.LatLngBounds(
+                new google.maps.LatLng(-32.0003444923, -52.9990303656),
+                new google.maps.LatLng(-29.9170066351, -51.1655442674)
+            );
+            quadranteAltitudeOverlay = new google.maps.GroundOverlay(
+                'https://raw.githubusercontent.com/heltonbiker/Experiments/master/KmlHacker/quadranteRelevo.jpg',
+                imageBounds,
+                {
+                    clickable: false,
+                    opacity: 0.4,
+                    map: map
+                });
 
 
             // Renderer
