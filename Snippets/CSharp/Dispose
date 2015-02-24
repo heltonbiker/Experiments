@@ -1,0 +1,20 @@
+
+
+        public void Dispose()
+        {
+            if (SomeEvent != null)
+            {
+                Delegate[] clientList = SomeEvent.GetInvocationList();
+                foreach (Delegate d in clientList)
+                {
+                    SomeEvent -= (d as SomeEventEventHandler);
+                }
+            }
+            
+            if (_some_device != null)
+            {
+                _some_device.Stop();
+                _some_device.DeviceEvent -= SomeEvent_Handler;
+                _some_device.Dispose();
+            }
+        }
