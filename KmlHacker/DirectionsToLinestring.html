@@ -7,11 +7,45 @@
     <title>Kml Hacker</title>
     <style>
 
-        html, body, #map-canvas {
-            height: 100%;
-            margin: 0px;
-            padding: 0px
+        html {
+            position: relative;
+            min-height: 100%;
         }
+        body {
+            margin: 0px;
+            background: Gray;
+            padding: 1px;
+        }
+
+        .container {
+            border: solid Black 1px;  
+            position: absolute;  
+            padding: 5px;            
+        }
+
+        #left {
+            background: LightYellow;
+            top:0px;
+            bottom:100px;
+            left:0px;
+            width:200px;
+        }
+
+        #main {
+            background: SkyBlue;
+            top: 0px;
+            bottom: 100px;
+            left: 200px;
+            right:0px;
+        }
+
+        #footer {
+            background: Pink;
+            height: 100px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+        }   
 
         #panel {
             position: absolute;
@@ -23,17 +57,58 @@
             border: 1px solid #999; 
         }
 
+        #map-canvas {
+            position: relative;
+            height: 98%; 
+            width: 100%;           
+        }
+
+        #linestring {
+            position: static;
+            width: 98%;
+            height: 90%;
+        }
+
     </style>
+
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
     <script>
 
         var map;
         var dService;
         var dRenderer;
-        var polyline = [];
+
+        var bingUrl = 'http://ak.dynamic.t0.tiles.virtualearth.net/comp/ch/21031230?it=A,G,L';
+
+        var layer_relevo = new google.maps.GroundOverlay(
+            'https://raw.githubusercontent.com/heltonbiker/Experiments/master/KmlHacker/quadranteRelevo.jpg',
+            new google.maps.LatLngBounds(
+                new google.maps.LatLng(-32.0003444923, -52.9990303656),
+                new google.maps.LatLng(-29.9170066351, -51.1655442674)
+            ),
+            {
+                clickable: false,
+                opacity: 0.4,
+        });
+
+        var layer_strava = new google.maps.ImageMapType({
+            getTileUrl: function(coord, zoom) {
+                var url = ['http://d2z9m7k9h4f0yp.cloudfront.net/tiles/cycling/color2/',
+                           zoom, '/', coord.x, '/', coord.y, '.png?v=3'].join('');
+                return url;
+            },
+            tileSize: new google.maps.Size(256, 256)
+        });
+
+        var layer_cachoeiras = new google.maps.KmlLayer({
+            url: 'https://www.google.com/maps/d/kml?mid=zm9PtxcccPwY.kPAmZ54kLu0k',
+            preserveViewport: true
+        })
+
+        var polyline = [];        
         var start;
         var end;
-
         var linestringTemplate = "<Placemark><name>#NAME#</name><styleUrl>#style</styleUrl><LineString><tessellate>1</tessellate><coordinates>#COORDINATES#</coordinates></LineString></Placemark>";
 
 
@@ -41,9 +116,17 @@
 
             // Map
             var mapOptions = {
-                mapTypeId: google.maps.MapTypeId.SATELLITE
+                // mapTypeControl: true,
+                // mapTypeControlOptions: {                
+                //     position: google.maps.ControlPosition.RIGHT_TOP,
+                //     mapTypeIds: [google.maps.MapTypeId.HYBRID, 'Grayscale']
+                //     },
+                //panControl: false,
+                //streetViewControl: false,                
+                mapTypeId: google.maps.MapTypeId.HYBRID
             };
-            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            map = new google.maps.Map(document.getElementById('map-canvas'), 
+                mapOptions);
 
 
             // Service
@@ -81,18 +164,18 @@
                 map: map
             })
 
-            var imageBounds = new google.maps.LatLngBounds(
-                new google.maps.LatLng(-32.0003444923, -52.9990303656),
-                new google.maps.LatLng(-29.9170066351, -51.1655442674)
-            );
-            quadranteAltitudeOverlay = new google.maps.GroundOverlay(
-                'https://raw.githubusercontent.com/heltonbiker/Experiments/master/KmlHacker/quadranteRelevo.jpg',
-                imageBounds,
-                {
-                    clickable: false,
-                    opacity: 0.4,
-                    map: map
-                });
+            // var camadaCachoeiras = new google.maps.KmlLayer({
+            //     url: 'https://www.google.com/maps/d/kml?mid=zm9PtxcccPwY.kPAmZ54kLu0k',
+            //     preserveViewport: true,
+            //     map: map
+            // })
+
+            layer_cachoeiras.setMap(map);
+
+
+            // TODO: OS DOIS OVERLAYS ABAIXO DEVEM SER CARREGADOS DEPENDENDO DOS RESPECTIVOS CHECKBOXES
+            //map.overlayMapTypes.push(layer_strava);
+            //layer_relevo.setMap(map);
 
 
             // Renderer
@@ -119,6 +202,7 @@
 
 
         function click(location) {
+            console.log("clicked")
 
             if (typeof start == 'undefined') {
                 start = location;
@@ -128,6 +212,7 @@
             else
             if (typeof end == 'undefined') {
                 end = location;
+                console.log("clicked second point")
                 calcRoute();
             }            
             else
@@ -148,34 +233,8 @@
             };
 
             dService.route(request, function(dResult, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    
+                if (status == google.maps.DirectionsStatus.OK) {                    
                     dRenderer.setDirections(dResult);
-
-
-
-                    return;
-
-
-                    /*
-                    var routepath = new google.maps.Polyline({
-                        geodesic: true,
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 1.0,
-                        strokeWeight: 2
-                    });
-
-                    routepath.setMap(map);    
-
-                    var arr = [];
-
-                    for (var p = 0; p < polyline.length; p++)
-                    {
-                        pair = polyline[p];
-                        arr.push(new google.maps.LatLng(pair));
-                    }               
-                    routepath.setPath(arr);
-                    */
                 }
             });
         }
@@ -189,7 +248,6 @@
             var legs = route.legs
 
             var name = route.summary;
-
 
             for (var i = 0; i < legs.length; i++)
             {
@@ -236,7 +294,6 @@
 
             while (index < str.length) {
 
-                // Reset shift, result, and byte
                 byte = null;
                 shift = 0;
                 result = 0;
@@ -266,16 +323,57 @@
             }
 
             return coordinates;
-        };        
+        }; 
 
-google.maps.event.addDomListener(window, 'load', initialize);
+        function toggle(sender, layer)       
+        {
+            if (sender.checked)
+            {
+                layer.setMap(map);
+            }
+            else
+            {
+                layer.setMap(null);
+            }
+        }
 
-</script>
+        function toggleImage(sender, layer)       
+        {
+            if (sender.checked)
+            {
+                map.overlayMapTypes.push(layer);
+            }
+            else
+            {
+                map.overlayMapTypes.clear(); // .pop()  .removeAt(index)
+            }
+        }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
 </head>
+
 <body>
-    <div id="map-canvas"></div>
-    <div id="panel">
-        <textarea id="linestring" style="width:98%; height:100px;">(clique dois pontos sobre o mapa para gerar um elemento KML Linestring aqui, a partir da rota calculada entre os pontos clicados)</textarea>
+    <div id="left" class="container">
+        <form title="Camadas">
+            <h2>Camadas</h2>
+            <input id="google_base" name="maplayer" type="radio" checked="true"/>Google<br/>
+            <input id="bing_base" name="maplayer" type="radio"/>Bing<br/>
+            <br/>
+            <input type="checkbox" onclick="toggle(this,layer_relevo);">Relevo<br/>
+            <input type="checkbox" onclick="toggleImage(this, layer_strava);">Heatmap Strava<br/>
+            <input type="checkbox" checked="true" onclick="toggle(this, layer_cachoeiras);">Cachoeiras RS<br/>
+        </form>
     </div>
+
+    <div id="main" class="container">
+        <div id="map-canvas"></div>
+    </div>
+
+    <div id="footer" class="container">
+        <textarea id="linestring">(clique dois pontos sobre o mapa para gerar um elemento KML Linestring aqui, a partir da rota calculada entre os pontos clicados)</textarea>
+    </div>
+
 </body>
 </html>

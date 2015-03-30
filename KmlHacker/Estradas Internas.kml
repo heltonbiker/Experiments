@@ -6,12 +6,9 @@
 		<Style id="style">
 			<LineStyle>
 				<color>88ff8800</color>
-				<width>2</width>
+				<width>3</width>
 			</LineStyle>
 		</Style>
-
-		
-
 		<Placemark>
 			<name>RS-715</name>
 			<styleUrl>#style</styleUrl>
