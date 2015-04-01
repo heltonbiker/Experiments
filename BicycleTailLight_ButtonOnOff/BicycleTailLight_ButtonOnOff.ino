@@ -29,7 +29,7 @@ unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
 
 volatile unsigned long lastMicros;
-long debouncingTime = 1000 * 200;
+long debouncingTime = 1000 * 400;
 
 
 void setup() {
@@ -39,8 +39,8 @@ void setup() {
   pinMode(ledPin, OUTPUT);  
 
   // disable onboard led
-  pinMode(13, OUTPUT);
-  digitalWrite(13, LOW);    
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);    
 
   // turn led off
   digitalWrite(ledPin, LOW);
@@ -57,7 +57,6 @@ void loop() {
   else {
     digitalWrite(ledPin, LOW);
   }
-
 }
 
 void debounceInterrupt() {
@@ -65,26 +64,23 @@ void debounceInterrupt() {
     toggleBlinking();
   }
   lastMicros = micros();
-
 }
 
 void toggleBlinking() {
     blinkingTurnedOn = !blinkingTurnedOn;  
 }
 
-void performBlinking() {
-    int timeDelta = currentMillis - previousMillis;
-    
-    // check if time "off" elapsed
-    bool elapsedOff = ledState == LOW && timeDelta > timeLedOff;
-
-    // check if time "on" elapsed
-    bool elapsedOn = ledState == HIGH && timeDelta > timeLedOn;
-    
-    // blinking itself
-    if (elapsedOff || elapsedOn) {
+void performBlinking() {    
+    if (timeToToggleLedState()) {
       toggleLedState();
     }  
+}
+
+bool timeToToggleLedState() {
+	unsigned long timeDelta = currentMillis - previousMillis;
+	bool elapsedOn = ledState == HIGH && timeDelta > timeLedOn;
+	bool elapsedOff = ledState == LOW && timeDelta > timeLedOff;
+	return (elapsedOn || elapsedOff);
 }
 
 void toggleLedState() {  
