@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>Bike Light Patterns</title>
+
+    <!-- LESS CSS
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet/less" type="text/css" href="styles.less">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <style type="text/less">
+        // some style
+    </style>
+    -->
+
+     <!--
+   <meta http-equiv="refresh" content="1">
+
+    <meta http-equiv="pragma" content="no-cache"/>
+    <link rel="stylesheet" href="file.css" type="text/css"/>
+    -->
+
+    <style type="text/css">
+    	svg {
+    		background: #D5EDF1
+    	}
+
+    	.redplastic {
+    		fill: #FF8282
+    	}
+
+        .darkness {
+            opacity: 0.6
+        }
+
+        @-webkit-keyframes blinking {
+          0%   {opacity: 0}
+          49.9%  {opacity: 0}
+          50%  {opacity: 1}
+          99.9% {opacity: 1}
+        }
+
+        .led {
+          -webkit-animation:blinking 0.1s linear 0s infinite alternate;
+        }
+    </style>
+</head>
+
+<body>
+    <svg width="150" height="200">
+    	<rect class="redplastic" x="40" y="40" rx="20" ry="20" width="70" height="100"/>
+        <rect class="darkness" x="0" y="0" width="150" height="200" fill="black"/>
+		<circle class="led" cx="75" cy="75" r="10" fill="#FF4848" />
+    </svg>
+</body>
+</html>

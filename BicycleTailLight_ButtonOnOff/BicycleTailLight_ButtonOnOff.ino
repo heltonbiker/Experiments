@@ -23,7 +23,7 @@ int previousButtonLevel = LOW;
 
 int ledState = LOW;
 
-bool blinkingTurnedOn = false;
+volatile bool blinkingTurnedOn = false;
 
 unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
