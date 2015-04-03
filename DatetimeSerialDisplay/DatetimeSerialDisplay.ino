@@ -5,6 +5,7 @@
 
 RTC_DS1307 rtc;
 const int chipSelect = 4;
+File dataFile;
 
 void setup () {
     
@@ -22,6 +23,8 @@ void setup () {
     {
         return;
     }
+
+    dataFile = SD.open("datalog.txt", FILE_WRITE);
 
 }
 
@@ -51,12 +54,12 @@ void loop () {
         }
     }    
     
-    File dataFile = SD.open("datalog.txt", FILE_WRITE);
+
 
     if (dataFile) {
         dataFile.println(line);
     }
-    dataFile.close();
+    //dataFile.close();
 
     //delay(100);
 }
