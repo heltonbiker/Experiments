@@ -2,10 +2,10 @@ const int button = A5;
 const int speaker = 9;
 
 const int lower = 100;
-const int higher = 8000;
+const int higher = 3000;
 
 const float increment = 1;
-const float decrement = 0.8;
+const float decrement = 0.0005;
 
 float frequency = lower;
 
@@ -37,7 +37,7 @@ void increaseFrequency() {
 }
 
 void decreaseFrequency() {
-  frequency = frequency * 0.9995;
+  frequency = frequency * (1 - decrement));
 }
 
 
