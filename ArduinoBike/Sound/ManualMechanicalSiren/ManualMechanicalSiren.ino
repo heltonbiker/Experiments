@@ -37,7 +37,7 @@ void increaseFrequency() {
 }
 
 void decreaseFrequency() {
-  frequency = frequency * (1 - decrement));
+  frequency = frequency * (1 - decrement);
 }
 
 
