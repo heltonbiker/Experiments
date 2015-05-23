@@ -1,4 +1,4 @@
-const int falante = 5;
+const int falante = 9;
 
 int lowfreq = 600;
 int hifreq = 2400;

@@ -4,7 +4,7 @@ const int speaker = 9;
 const int lower = 100;
 const int higher = 3000;
 
-const float increment = 1;
+const float increment = 2;
 const float decrement = 0.0005;
 
 float frequency = lower;
@@ -37,7 +37,7 @@ void increaseFrequency() {
 }
 
 void decreaseFrequency() {
-  frequency = frequency * (1 - decrement));
+  frequency = frequency * (1 - decrement);
 }
 
 
